@@ -12,6 +12,8 @@ description: "Task list template for feature implementation"
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
+**Constitution Compliance**: All tasks must align with the project constitution principles.
+
 ## Format: `[ID] [P?] [Story] Description`
 
 - **[P]**: Can run in parallel (different files, no dependencies)
@@ -79,6 +81,13 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
+**Constitution Alignment**:
+- **Spec-First, AI-Driven Authoring**: [How this user story follows spec-first methodology]
+- **Technical Accuracy and Clarity**: [How this ensures technical accuracy and clarity]
+- **No Unsupported Content**: [How this avoids unsupported or speculative content]
+- **Docusaurus Integration**: [How this aligns with Docusaurus framework]
+- **RAG Chatbot Compatibility**: [How this supports RAG chatbot integration]
+
 ### Tests for User Story 1 (OPTIONAL - only if tests requested) ⚠️
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
@@ -105,6 +114,13 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
+**Constitution Alignment**:
+- **Spec-First, AI-Driven Authoring**: [How this user story follows spec-first methodology]
+- **Technical Accuracy and Clarity**: [How this ensures technical accuracy and clarity]
+- **No Unsupported Content**: [How this avoids unsupported or speculative content]
+- **Docusaurus Integration**: [How this aligns with Docusaurus framework]
+- **RAG Chatbot Compatibility**: [How this supports RAG chatbot integration]
+
 ### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
 
 - [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test_[name].py
@@ -126,6 +142,13 @@ Examples of foundational tasks (adjust based on your project):
 **Goal**: [Brief description of what this story delivers]
 
 **Independent Test**: [How to verify this story works on its own]
+
+**Constitution Alignment**:
+- **Spec-First, AI-Driven Authoring**: [How this user story follows spec-first methodology]
+- **Technical Accuracy and Clarity**: [How this ensures technical accuracy and clarity]
+- **No Unsupported Content**: [How this avoids unsupported or speculative content]
+- **Docusaurus Integration**: [How this aligns with Docusaurus framework]
+- **RAG Chatbot Compatibility**: [How this supports RAG chatbot integration]
 
 ### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
 
@@ -156,6 +179,16 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
 - [ ] TXXX Security hardening
 - [ ] TXXX Run quickstart.md validation
+
+**Constitution Compliance Verification**:
+- [ ] Verify all content follows spec-first methodology
+- [ ] Confirm technical accuracy and clarity of all materials
+- [ ] Validate reproducibility and maintainability of processes
+- [ ] Ensure no unsupported or speculative content exists
+- [ ] Confirm Docusaurus integration meets requirements
+- [ ] Verify RAG chatbot functionality without hallucinations
+- [ ] Confirm free-tier infrastructure compliance
+- [ ] Validate GitHub Pages deployment capability
 
 ---
 

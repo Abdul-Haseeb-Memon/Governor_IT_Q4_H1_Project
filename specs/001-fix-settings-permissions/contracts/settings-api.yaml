@@ -1,0 +1,39 @@
+# Configuration API Contract: Claude Code Settings
+
+## Permission Pattern Format
+
+### Request Structure
+```
+{
+  "permissions": {
+    "allow": [
+      "Bash(command:*)",
+      "Bash(move:*)",
+      "Bash(powershell:*)"
+    ]
+  }
+}
+```
+
+### Validation Rules
+- All patterns must have `:*` at the end for prefix matching
+- Patterns with `:*` in the middle are invalid
+- Commands must follow Claude Code's security requirements
+
+### Response Behavior
+- Valid patterns: Claude Code operates normally
+- Invalid patterns: Claude Code shows "Found 2 invalid settings files" error
+
+## Supported Command Patterns
+
+### Move Commands
+- Pattern: `Bash(move:*)`
+- Example: `Bash(move source destination:*)`
+
+### PowerShell Commands
+- Pattern: `Bash(powershell:*)`
+- Example: `Bash(powershell Get-ChildItem:*)`
+
+### General Commands
+- Pattern: `Bash(command:*)`
+- Example: `Bash(npm run:*)`, `Bash(git:*)`

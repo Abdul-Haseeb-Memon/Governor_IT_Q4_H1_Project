@@ -1,0 +1,164 @@
+# Content API Contract for AI-Robot Brain Documentation
+
+openapi: 3.0.0
+info:
+  title: AI-Robot Brain Documentation Content API
+  version: 1.0.0
+  description: API contract for AI-Robot Brain documentation content structure covering NVIDIA Isaac technologies
+
+paths: {}
+
+components:
+  schemas:
+    Chapter:
+      type: object
+      required:
+        - id
+        - title
+        - slug
+        - order
+        - content
+        - learningObjectives
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the chapter
+        title:
+          type: string
+          description: Display title of the chapter
+        slug:
+          type: string
+          description: URL-friendly identifier
+        order:
+          type: integer
+          description: Sequence order in the module
+        content:
+          type: string
+          description: Markdown content of the chapter
+        learningObjectives:
+          type: array
+          items:
+            type: string
+          description: List of learning objectives for the chapter
+        prerequisites:
+          type: array
+          items:
+            type: string
+          description: Prerequisite knowledge required
+        examples:
+          type: array
+          items:
+            $ref: '#/components/schemas/Example'
+        exercises:
+          type: array
+          items:
+            $ref: '#/components/schemas/Exercise'
+
+    Example:
+      type: object
+      required:
+        - title
+        - code
+        - explanation
+      properties:
+        title:
+          type: string
+          description: Title of the example
+        code:
+          type: string
+          description: Code snippet or configuration for the example
+        language:
+          type: string
+          description: Programming language or configuration format
+        explanation:
+          type: string
+          description: Explanation of the example
+
+    Exercise:
+      type: object
+      required:
+        - title
+        - description
+        - difficulty
+      properties:
+        title:
+          type: string
+          description: Title of the exercise
+        description:
+          type: string
+          description: Detailed description of what to implement
+        difficulty:
+          type: string
+          enum: [beginner, intermediate, advanced]
+          description: Difficulty level of the exercise
+        hints:
+          type: array
+          items:
+            type: string
+          description: Helpful hints for completing the exercise
+
+    IsaacSimEnvironment:
+      type: object
+      required:
+        - id
+        - name
+        - description
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the simulation environment
+        name:
+          type: string
+          description: Display name of the environment
+        description:
+          type: string
+          description: Brief description of the environment
+        physicsProperties:
+          type: object
+          description: Configuration for physics simulation
+        lightingConditions:
+          type: object
+          description: Lighting setup for photorealistic rendering
+        objects:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              type:
+                type: string
+              properties:
+                type: object
+
+    PerceptionPipeline:
+      type: object
+      required:
+        - id
+        - name
+        - components
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the pipeline
+        name:
+          type: string
+          description: Display name of the pipeline
+        components:
+          type: array
+          items:
+            type: string
+          description: List of processing components in the pipeline
+        inputTypes:
+          type: array
+          items:
+            type: string
+          description: Types of sensor data accepted
+        outputTypes:
+          type: array
+          items:
+            type: string
+          description: Types of processed data produced
+        hardwareRequirements:
+          type: string
+          description: Hardware needed for acceleration

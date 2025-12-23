@@ -1,4 +1,4 @@
-# Claude Code Rules
+﻿# Claude Code Rules
 
 This file is generated during init for the selected agent.
 
@@ -208,3 +208,15 @@ Wait for consent; never auto-create ADRs. Group related decisions (stacks, authe
 
 ## Code Standards
 See `.specify/memory/constitution.md` for code quality, testing, performance, security, and architecture principles.
+
+## Technology Stack for Current Feature (Site-Wide Urdu Translation)
+
+- **Framework**: Docusaurus v3+ (React-based static site generator)
+- **Frontend Language**: JavaScript ES6+ with React 18
+- **State Management**: React Context API for global translation state
+- **DOM Manipulation**: Native DOM APIs (TreeWalker, text node traversal)
+- **Styling**: CSS with RTL (right-to-left) support for Arabic script
+- **Storage**: localStorage for translation state persistence
+- **Internationalization**: Custom Arabic script Urdu dictionary and translation functions
+- **Build Tool**: Node.js with npm/yarn
+- **Deployment**: GitHub Pages compatible

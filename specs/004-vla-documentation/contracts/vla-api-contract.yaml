@@ -1,0 +1,267 @@
+# API Contract: Vision-Language-Action (VLA) System
+
+## Overview
+This document defines the API contracts for the Vision-Language-Action system components that students will learn to implement. These are educational contracts demonstrating how the components would interact in a real system.
+
+## Voice Command Processing API
+
+### POST /api/vla/voice/transcribe
+Transcribes audio input using OpenAI Whisper
+
+**Request**:
+```json
+{
+  "audio_data": "base64_encoded_audio",
+  "model": "whisper-1",
+  "language": "en"
+}
+```
+
+**Response**:
+```json
+{
+  "transcription": "text of the spoken command",
+  "confidence": 0.95,
+  "duration": 3.2,
+  "timestamp": "2025-12-18T10:30:00Z"
+}
+```
+
+**Success Criteria**:
+- Returns transcription within 5 seconds
+- Confidence score between 0 and 1
+- Handles audio files up to 25MB
+
+### POST /api/vla/voice/validate
+Validates a transcribed command for robot compatibility
+
+**Request**:
+```json
+{
+  "command_text": "Go to the kitchen and bring me a cup",
+  "robot_capabilities": ["navigation", "manipulation", "audio"]
+}
+```
+
+**Response**:
+```json
+{
+  "is_valid": true,
+  "parsed_intent": {
+    "action": "fetch_object",
+    "destination": "kitchen",
+    "object": "cup"
+  },
+  "confidence": 0.87
+}
+```
+
+## LLM Planning API
+
+### POST /api/vla/planning/generate
+Generates an action sequence from a natural language goal
+
+**Request**:
+```json
+{
+  "goal": "Go to the kitchen and bring me a cup",
+  "robot_context": {
+    "current_location": "living_room",
+    "capabilities": ["navigation", "manipulation"],
+    "environment_map": "map_id_123"
+  }
+}
+```
+
+**Response**:
+```json
+{
+  "action_sequence": [
+    {
+      "action_type": "navigate",
+      "target_location": "kitchen",
+      "estimated_time": 60
+    },
+    {
+      "action_type": "detect_object",
+      "object_type": "cup",
+      "search_area": "counter"
+    },
+    {
+      "action_type": "grasp_object",
+      "object_id": "cup_456"
+    },
+    {
+      "action_type": "navigate",
+      "target_location": "living_room",
+      "estimated_time": 60
+    },
+    {
+      "action_type": "place_object",
+      "location": "table"
+    }
+  ],
+  "plan_confidence": 0.92,
+  "estimated_completion_time": 300
+}
+```
+
+## Vision Processing API
+
+### POST /api/vla/vision/detect
+Detects objects in an image
+
+**Request**:
+```json
+{
+  "image_data": "base64_encoded_image",
+  "detection_classes": ["cup", "bottle", "mug"],
+  "confidence_threshold": 0.7
+}
+```
+
+**Response**:
+```json
+{
+  "detections": [
+    {
+      "class": "cup",
+      "confidence": 0.92,
+      "bbox": {
+        "x": 100,
+        "y": 150,
+        "width": 50,
+        "height": 80
+      },
+      "id": "cup_456"
+    }
+  ],
+  "processing_time": 0.25,
+  "timestamp": "2025-12-18T10:30:05Z"
+}
+```
+
+### POST /api/vla/vision/track
+Tracks objects across multiple frames
+
+**Request**:
+```json
+{
+  "image_sequence": ["frame1", "frame2", "frame3"],
+  "target_object_id": "cup_456"
+}
+```
+
+**Response**:
+```json
+{
+  "tracking_result": {
+    "object_path": [
+      {"x": 100, "y": 150, "timestamp": "2025-12-18T10:30:05Z"},
+      {"x": 105, "y": 148, "timestamp": "2025-12-18T10:30:06Z"},
+      {"x": 110, "y": 145, "timestamp": "2025-12-18T10:30:07Z"}
+    ],
+    "velocity": {"x": 5, "y": -2.5}
+  }
+}
+```
+
+## VLA Pipeline API
+
+### POST /api/vla/pipeline/execute
+Executes the complete VLA pipeline from voice command to robot action
+
+**Request**:
+```json
+{
+  "voice_command": "Please bring me the red cup from the kitchen",
+  "robot_id": "humanoid_robot_001",
+  "execution_context": {
+    "current_location": "living_room",
+    "robot_capabilities": ["navigation", "manipulation", "audio", "vision"],
+    "environment_map": "home_layout_v2"
+  }
+}
+```
+
+**Response**:
+```json
+{
+  "pipeline_id": "vla_789",
+  "status": "in_progress",
+  "estimated_completion": 420,
+  "action_sequence": [
+    {
+      "step": 1,
+      "action": "transcribe_voice",
+      "status": "completed",
+      "result": "bring red cup from kitchen"
+    },
+    {
+      "step": 2,
+      "action": "generate_plan",
+      "status": "completed",
+      "result": "navigate → detect → grasp → return"
+    },
+    {
+      "step": 3,
+      "action": "execute_navigation",
+      "status": "in_progress",
+      "estimated_time_remaining": 120
+    }
+  ]
+}
+```
+
+### GET /api/vla/pipeline/{pipeline_id}
+Gets status of a running pipeline
+
+**Response**:
+```json
+{
+  "pipeline_id": "vla_789",
+  "status": "completed",
+  "result": {
+    "success": true,
+    "object_delivered": "red_cup_123",
+    "delivery_location": "living_room",
+    "execution_time": 380
+  },
+  "action_log": [
+    {
+      "timestamp": "2025-12-18T10:30:00Z",
+      "action": "transcribe_voice",
+      "status": "success",
+      "details": "Command: bring red cup from kitchen"
+    },
+    {
+      "timestamp": "2025-12-18T10:30:05Z",
+      "action": "generate_plan",
+      "status": "success",
+      "details": "Plan: navigate → detect → grasp → return"
+    }
+  ]
+}
+```
+
+## Error Handling
+
+### Standard Error Response
+```json
+{
+  "error": {
+    "code": "TRANSCRIPTION_ERROR",
+    "message": "Audio file could not be processed",
+    "details": "Unsupported audio format",
+    "timestamp": "2025-12-18T10:30:00Z"
+  }
+}
+```
+
+### Common Error Codes
+- `TRANSCRIPTION_ERROR`: Voice transcription failed
+- `PLANNING_ERROR`: LLM could not generate valid plan
+- `VISION_ERROR`: Object detection failed
+- `EXECUTION_ERROR`: Robot action execution failed
+- `VALIDATION_ERROR`: Input validation failed
+- `TIMEOUT_ERROR`: Operation exceeded time limit

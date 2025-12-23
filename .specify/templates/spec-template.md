@@ -105,6 +105,7 @@
 <!--
   ACTION REQUIRED: Define measurable success criteria.
   These must be technology-agnostic and measurable.
+  Must align with constitution principles.
 -->
 
 ### Measurable Outcomes
@@ -113,3 +114,14 @@
 - **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
 - **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
 - **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+
+### Constitution Alignment
+
+- **Spec-First, AI-Driven Authoring**: [How this feature aligns with spec-first methodology]
+- **Technical Accuracy and Clarity**: [How this ensures technical accuracy and clarity]
+- **Reproducibility and Maintainability**: [How this supports reproducibility and maintainability]
+- **No Unsupported or Speculative Content**: [How this avoids unsupported content]
+- **Docusaurus-First Documentation Framework**: [How this aligns with Docusaurus framework]
+- **RAG-Powered Chatbot Integration**: [How this supports RAG chatbot requirements]
+- **Free-Tier Infrastructure Compliance**: [How this works within free-tier constraints]
+- **GitHub Pages Deployment**: [How this supports GitHub Pages deployment]

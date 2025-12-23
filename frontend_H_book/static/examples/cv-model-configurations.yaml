@@ -1,0 +1,171 @@
+# Computer Vision Model Configurations for Robot Perception
+
+# YOLOv8 Configuration for Object Detection
+yolov8:
+  model_type: "yolo"
+  model_name: "yolov8n.pt"
+  input_size: [640, 640]  # width, height
+  confidence_threshold: 0.5
+  nms_threshold: 0.4
+  max_det: 300
+  classes:  # COCO dataset classes
+    - 0: person
+    - 39: bottle
+    - 41: cup
+    - 56: chair
+    - 60: dining table
+    - 62: potted plant
+    - 63: bed
+    - 67: tv
+    - 72: toaster
+    - 74: microwave
+    - 76: refrigerator
+    - 77: book
+    - 78: clock
+    - 79: vase
+    - 80: scissors
+    - 83: teddy bear
+
+# Semantic Segmentation Configuration (DeepLabV3)
+deeplabv3:
+  model_type: "segmentation"
+  model_name: "deeplabv3_resnet101"
+  input_size: [520, 520]  # width, height
+  num_classes: 21  # Pascal VOC classes + background
+  confidence_threshold: 0.7
+  classes:
+    - 0: background
+    - 1: aeroplane
+    - 2: bicycle
+    - 3: bird
+    - 4: boat
+    - 5: bottle
+    - 6: bus
+    - 7: car
+    - 8: cat
+    - 9: chair
+    - 10: cow
+    - 11: dining table
+    - 12: dog
+    - 13: horse
+    - 14: motorbike
+    - 15: person
+    - 16: potted plant
+    - 17: sheep
+    - 18: sofa
+    - 19: train
+    - 20: tv/monitor
+
+# Custom Robot Objects Configuration
+robot_objects:
+  model_type: "custom_detection"
+  model_name: "robot_objects.pt"
+  input_size: [640, 640]
+  confidence_threshold: 0.6
+  nms_threshold: 0.3
+  max_det: 50
+  classes:
+    - 0: cup
+    - 1: bottle
+    - 2: book
+    - 3: phone
+    - 4: laptop
+    - 5: box
+    - 6: ball
+    - 7: toy
+    - 8: container
+    - 9: utensil
+    - 10: remote
+    - 11: keys
+    - 12: wallet
+    - 13: glasses
+    - 14: hat
+
+# Depth Estimation Configuration
+depth_estimation:
+  model_type: "monocular_depth"
+  model_name: "midas_v21_small"
+  input_size: [256, 256]
+  output_scale: 1.0
+  min_depth: 0.1  # meters
+  max_depth: 10.0  # meters
+  confidence_threshold: 0.8
+
+# Feature Detection Configuration
+feature_detection:
+  model_type: "feature_matching"
+  detector: "orb"
+  descriptor: "orb"
+  matcher: "bf"
+  max_features: 1000
+  matching_threshold: 0.7
+  ransac_threshold: 5.0
+
+# Vision Pipeline Parameters
+vision_pipeline:
+  processing_rate: 10.0  # Hz
+  max_queue_size: 5
+  enable_preprocessing: true
+  preprocessing:
+    resize: true
+    normalize: true
+    augment: false
+  enable_postprocessing: true
+  postprocessing:
+    nms: true
+    filtering: true
+    smoothing: false
+  hardware_acceleration:
+    cuda: true
+    tensorrt: false
+    openvino: false
+
+# Camera Configuration for 3D Estimation
+camera:
+  focal_length_x: 554.256  # pixels
+  focal_length_y: 554.256  # pixels
+  principal_point_x: 320.5  # pixels
+  principal_point_y: 240.5  # pixels
+  distortion_coeffs: [0.0, 0.0, 0.0, 0.0, 0.0]  # k1, k2, p1, p2, k3
+  baseline: 0.0  # for stereo cameras (meters)
+  depth_scale: 0.001  # depth value to meter conversion
+
+# Performance Optimization
+performance:
+  batch_size: 1
+  precision: "fp32"  # fp32, fp16, int8
+  async_processing: true
+  threading:
+    num_threads: 4
+    queue_size: 10
+  memory:
+    gpu_memory_fraction: 0.8
+    allow_growth: true
+
+# Object Interaction Parameters
+object_interaction:
+  graspable_objects:
+    - "cup"
+    - "bottle"
+    - "book"
+    - "phone"
+    - "laptop"
+    - "box"
+    - "ball"
+    - "toy"
+  detection_ranges:
+    close_range: 0.5  # meters
+    medium_range: 2.0  # meters
+    far_range: 5.0  # meters
+  approach_distances:
+    person: 1.0  # meters
+    object: 0.5  # meters
+    surface: 0.8  # meters
+
+# Safety and Validation
+safety:
+  confidence_threshold: 0.7
+  validation_enabled: true
+  position_accuracy_threshold: 0.1  # meters
+  detection_timeout: 5.0  # seconds
+  retry_attempts: 3
